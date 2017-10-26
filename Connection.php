@@ -18,7 +18,7 @@ class Connection{
    */
   public $debug = false;
 
-  const HTTP_OK = 200;
+  const HTTP_OK = [200, 201];
   
   /**
    * Store error making the last request to Bullseye.
@@ -136,7 +136,7 @@ class Connection{
     }
     
     //store error in request response
-    if($httpcode !== self::HTTP_OK)
+    if(!in_array($httpcode, self::HTTP_OK))
       $this->lastError = array(
         'code' => $httpcode,
         'response' => json_decode($response, true)
@@ -211,9 +211,8 @@ class Connection{
     list($httpcode, $response) = $this->query($httpMethod, $action, $requestData, $private);
     
     //validate HTTP code of response
-    if($httpcode !== self::HTTP_OK) {
+    if(!in_array($httpcode, self::HTTP_OK))
       return false;
-    }
     
     //returns response
     return $response;
