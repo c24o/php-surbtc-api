@@ -123,7 +123,7 @@ class Surbtc {
   function balances($currency = null){
     $method = array(
       'httpMethod' => 'get',
-      'action' => "balances/{$currency}",
+      'action' => 'balances' . ($currency ? "/{$currency}" : ''),
     );
 
     return $this->connection->request($method, null, true);
